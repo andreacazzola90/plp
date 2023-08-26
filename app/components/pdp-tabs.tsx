@@ -1,25 +1,25 @@
 'use client'
-import { Tabs, TabList, Tab, TabPanel } from "react-tabs"
+import { Tabs, TabList, Tab, TabPanel, } from "react-tabs"
 
 export default function PdpTabs() {
 
     return (
         <>
             {/* Tabs */}
-            <Tabs>
-                <TabList className="tabs pt-12">
+            <Tabs selectedTabClassName={'tab-active focus-visible:none'}>
+                <TabList className="tabs pt-12 ">
                     <Tab
-                        className="tab tab-lg tab-lifted tab-active"
+                        className="tab tab-lg tab-lifted focus-visible:outline-none"
                     >
                         Description
                     </Tab>
-                    <Tab className="tab tab-lg tab-lifted text-gray-400">
+                    <Tab className="tab tab-lg tab-lifted focus-visible:outline-none">
                         Product Details
                     </Tab>
-                    <Tab className="tab tab-lg tab-lifted text-gray-400">
+                    <Tab className="tab tab-lg tab-lifted focus-visible:outline-none">
                         Vendor Info
                     </Tab>
-                    <Tab className="tab tab-lg tab-lifted text-gray-400">
+                    <Tab className="tab tab-lg tab-lifted focus-visible:outline-none">
                         Reviews
                     </Tab>
                 </TabList>

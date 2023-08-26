@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 
 async function getData(slug: string) {
-  const res = await fetch(`https://4ilk3v7wbk.execute-api.eu-west-1.amazonaws.com/dev/products/${slug}.json`)
+  const res = await fetch(`${process.env.DB_HOST}/products/${slug}.json`)
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
@@ -22,7 +22,7 @@ export default async function Product({ params }: { params: { slug: string } }) 
       {/* <MySwiper></MySwiper> */}
 
       <div className=" flex flex-col w-full lg:flex-row">
-        <div className="grid flex-shrink-0  my-20 lg:pr-6">
+        <div className="grid flex-shrink-0   mt-20 md:my-20 lg:pr-6">
           <Image
             src={product?.image?.src!}
             alt="Vercel Logo"
@@ -33,19 +33,19 @@ export default async function Product({ params }: { params: { slug: string } }) 
           />
         </div>
         <div className="divider lg:divider-horizontal" />
-        <div className="grid flex-shrink my-20">
+        <div className="grid flex-shrink md:my-20">
           <div className="flex flex-col space-y-5 lg:pl-4">
             <h1 className="text-4xl text-black font-bold">
               {product.title} {tags.map((t: any, i: number) => <div key={i} className="badge badge-secondary text-xs ml-2">{t}</div>)}
             </h1>
             <div className="text-md">
-              <p><span className='font-bold'>Vendor:</span> {product.vendor}</p>
-              <p><span className='font-bold'>Type:</span> {product.product_type}</p>
+              <p className='mb-2'><span className='font-bold'>Vendor:</span> {product.vendor}</p>
+              <p className='mb-2'><span className='font-bold'>Type:</span> {product.product_type}</p>
               {variants.map((v: any, i: number) =>
                 <div key={i}>
-                  <p><span className='font-bold'>Weight:</span> {v.weight} {v.weight_unit}</p>
-                  <p><span className='font-bold'>Tequires shipping:</span> {v.requires_shipping ? 'Yes' : 'No'}</p>
-                  <p><span className='font-bold'>Quantity:</span> {v.inventory_quantity}</p>
+                  <p className='mb-2'><span className='font-bold'>Weight:</span> {v.weight} {v.weight_unit}</p>
+                  <p className='mb-2'><span className='font-bold'>Tequires shipping:</span> {v.requires_shipping ? 'Yes' : 'No'}</p>
+                  <p className='mb-2'><span className='font-bold'>Quantity:</span> {v.inventory_quantity}</p>
                 </div>
               )}
             </div>

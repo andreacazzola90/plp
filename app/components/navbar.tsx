@@ -7,7 +7,7 @@ import { categories } from '../utils';
 import SideMenu from './sideMenu';
 
 async function getData() {
-    const res = await fetch(`https://4ilk3v7wbk.execute-api.eu-west-1.amazonaws.com/dev/collection_listings.json`)
+    const res = await fetch(`${process.env.DB_HOST}/collection_listings.json`)
     if (!res.ok) {
         throw new Error('Failed to fetch data')
     }
@@ -21,6 +21,7 @@ export default async function page() {
         <div className="navbar bg-base-200 text-base-content md:px-24   fixed z-[100] animated">
             <div className="navbar-start">
                 <Link href={'/'} className="btn btn-ghost normal-case text-xl">
+                    <Image src="../../public/logo.svg" height={30} width={30} alt={''} />
                     <svg id="logo-37" width="42" height="38" viewBox="0 0 42 38" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M5.74661 28.7259C7.28678 29.8002 9.78389 29.8002 11.3241 28.7259C12.8642 27.6516 12.8642 25.9098 11.3241 24.8355C9.78389 23.7612 7.28678 23.7612 5.74661 24.8355C4.20644 25.9098 4.20644 27.6516 5.74661 28.7259Z" className="ccustom" fill="#71c2c7"></path>
                         <path d="M21.7322 14.1371C24.0425 15.7485 27.7881 15.7485 30.0984 14.1371C32.4086 12.5256 32.4086 9.91298 30.0984 8.30155C27.7881 6.69011 24.0425 6.69011 21.7322 8.30155C19.422 9.91298 19.422 12.5256 21.7322 14.1371Z" className="ccustom" fill="#71c2c7"></path>
                         <path d="M13.2464 21.4315C15.1716 22.7743 18.293 22.7743 20.2182 21.4315C22.1434 20.0886 22.1434 17.9114 20.2182 16.5685C18.293 15.2257 15.1716 15.2257 13.2464 16.5685C11.3212 17.9114 11.3212 20.0886 13.2464 21.4315Z" className="ccustom" fill="#71c2c7"></path>

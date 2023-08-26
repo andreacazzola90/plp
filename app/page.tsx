@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faGem, faHeart, faSeedling, faShirt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 async function getData() {
-  const url = `https://4ilk3v7wbk.execute-api.eu-west-1.amazonaws.com/dev/collection_listings.json`
+  const url = `${ process.env.DB_HOST }/collection_listings.json`
   const data = fetch(url).then(response => response.json())
 
   return data

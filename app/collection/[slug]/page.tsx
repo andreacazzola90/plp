@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
 
 async function getData(slug: string) {
-  const url = `https://4ilk3v7wbk.execute-api.eu-west-1.amazonaws.com/dev/collections/${slug}/products.json`
+  const url = `${process.env.DB_HOST}/collections/${slug}/products.json`
   const data = fetch(url).then(response => response.json())
   return data
 }
