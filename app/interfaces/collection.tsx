@@ -3,7 +3,7 @@ interface Collection {
     collection_id?: string,
     updated_at?: string,
     body_html?: string,
-    default_product_image?: unknown,
+    default_product_image?: Image,
     handle?: string,
     image?: Image,
     title?: string,

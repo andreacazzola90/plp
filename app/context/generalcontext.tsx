@@ -2,8 +2,15 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 
 const generalContextDefaultValues: generalContextType = {
-    plpViewCol: true,
-    setPlpViewCol: () => { },
+    isCardSide: false,
+    setCardSide: () => { },
+    isAlphabeticSort: true,
+    setAlphabeticSort: () => { },
+    cart: 0,
+    addToCart: () => { },
+    wishlist: 0,
+    addToWishlist: () => { },
+
 };
 
 const GeneralContext = createContext<generalContextType>(generalContextDefaultValues);
@@ -17,10 +24,15 @@ type Props = {
 };
 
 export function GeneralProvider({ children }: Props) {
-    const [plpViewCol, setPlpViewCol] = useState(true);
+    const [isCardSide, setCardSide] = useState(false);
+    const [isAlphabeticSort, setAlphabeticSort] = useState(true);
+    const [cart, addToCart] = useState(0);
+    const [wishlist, addToWishlist] = useState(0);
 
     return (
-        <GeneralContext.Provider value={{ plpViewCol, setPlpViewCol }}>
+        <GeneralContext.Provider value={{
+            isCardSide, setCardSide, isAlphabeticSort, setAlphabeticSort, cart, addToCart, wishlist, addToWishlist
+        }}>
             {children}
         </GeneralContext.Provider>
     );
