@@ -1,52 +1,70 @@
+import PdpActions from '@/app/components/pdpActions';
+import PdpTabs from '@/app/components/pdp-tabs';
 import Image from 'next/image'
-// Fetching data from the JSON file
-import fsPromises from 'fs/promises';
-import path from 'path'
-import Link from 'next/link';
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 
-async function getData() {
-  const filePath = path.join(process.cwd(), 'app/api/product.json');
-  const jsonData = await fsPromises.readFile(filePath);
-
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-  const objectData = JSON.parse(jsonData.toString());
-
-  if (!objectData) {
-    // This will activate the closest `error.js` Error Boundary
+async function getData(slug: string) {
+  const res = await fetch(`https://4ilk3v7wbk.execute-api.eu-west-1.amazonaws.com/dev/products/${slug}.json`)
+  if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
-  return objectData
+  return res.json()
 }
 
-
 export default async function Product({ params }: { params: { slug: string } }) {
-  const product: Product = await getData()
+  const { product }: { product: Product } = await getData(params.slug)
+  const { options, variants } = product
+  let tags = product?.tags?.split(", ") || []
 
   return (
-    <main className="pdp   p-24 bg-base-100">
-      <div className="card  bg-base-100 shadow-xl flex flex-row w-100 text-base-content">
-        <figure className="card-image ">
+    <main className=" p-6 md:p-24 bg-base-100 text-base-content">
+
+      {/* <MySwiper></MySwiper> */}
+
+      <div className=" flex flex-col w-full lg:flex-row">
+        <div className="grid flex-shrink-0  my-20 lg:pr-6">
           <Image
-            src="/img-placeholder.jpg"
+            src={product?.image?.src!}
             alt="Vercel Logo"
             className="img-fluid"
-            width={500}
-            height={300}
+            width={800}
+            height={800}
             priority
           />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">{product.title}</h2>
-          <p>{product.body_html}</p>
-          <div className="card-actions ">
-            <button>wishlist</button>
-            <Link href={`/product/${params.slug}`}>
-              <button className="btn btn-primary">Buy Now</button>
-            </Link>
-          </div>
         </div>
+        <div className="divider lg:divider-horizontal" />
+        <div className="grid flex-shrink my-20">
+          <div className="flex flex-col space-y-5 lg:pl-4">
+            <h1 className="text-4xl text-black font-bold">
+              {product.title} {tags.map((t: any, i: number) => <div key={i} className="badge badge-secondary text-xs ml-2">{t}</div>)}
+            </h1>
+            <div className="text-md">
+              <p><span className='font-bold'>Vendor:</span> {product.vendor}</p>
+              <p><span className='font-bold'>Type:</span> {product.product_type}</p>
+              {variants.map((v: any, i: number) =>
+                <div key={i}>
+                  <p><span className='font-bold'>Weight:</span> {v.weight} {v.weight_unit}</p>
+                  <p><span className='font-bold'>Tequires shipping:</span> {v.requires_shipping ? 'Yes' : 'No'}</p>
+                  <p><span className='font-bold'>Quantity:</span> {v.inventory_quantity}</p>
+                </div>
+              )}
+            </div>
+            {variants.map((v: any, i: number) =>
+              <div key={i}>
+                <h3 className="text-black text-xl font-semibold">
+                  {v.price}€
+                </h3>
+              </div>
+            )}
+            <PdpActions product={product}></PdpActions>
+          </div>
+
+        </div>
+
       </div>
+      <PdpTabs></PdpTabs>
+
+
     </main>
   )
 

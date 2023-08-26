@@ -1,49 +1,28 @@
+'use client'
 import Pagination from "./pagination"
-import Link from "next/link"
-import Image from "next/image"
 import PlpNavbar from "./plp/plpNavbar"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowRightArrowLeft, faHeart } from "@fortawesome/free-solid-svg-icons"
+import { useGeneral } from "../context/generalcontext"
+import ProductPreview from "./plp/productPreview"
 
-export default function Plp({ products, pageInfo }: { products: [Product], pageInfo: pageInfo }) {
+export default function Plp({ products, limit = 0, currentPage = 0 }: { products: [Product], limit: number, currentPage: number }) {
+    const { isCardSide, isAlphabeticSort } = useGeneral();
 
+
+    let startFromProduct = currentPage
+    startFromProduct = currentPage * limit
+    let endProduct = startFromProduct + limit
+    let visibleProducts = products.slice(startFromProduct, endProduct)
+
+    if (!isAlphabeticSort) {
+        visibleProducts = visibleProducts.reverse()
+    }
     return (
         <div className="cmp_plp">
-            <PlpNavbar />
-            <div className={`plp flex flex justify-between gap-14`}>
-                {Object.values(products).map((x: any) =>
-                    <div className="card w-96 bg-base-100 shadow-xl" key={x.id}>
-                        <figure className="pt-12">
-                            <Image
-                                src="/img-placeholder.jpg"
-                                alt="Vercel Logo"
-                                className=""
-                                width={300}
-                                height={100}
-                                priority
-                            />
-                        </figure>
-                        <div className="card-body">
-                            <h2 className="card-title">{x.title}</h2>
-                            <p>{x.content}</p>
-                            <div className="card-actions justify-between">
-                                <div>
-                                    <button className="btn">
-                                        <FontAwesomeIcon icon={faHeart} />
-                                    </button>
-                                    <button className="btn">
-                                        <FontAwesomeIcon icon={faArrowRightArrowLeft} />
-                                    </button>
-                                </div>
-                                <Link href={`/product/${x.id}`}>
-                                    <button className="btn btn-primary">Buy Now</button>
-                                </Link>
-
-                            </div>
-                        </div>
-                    </div>)}
+            <PlpNavbar page={currentPage} />
+            <div className={`plp grid pb-10  ${isCardSide ? 'md:grid-cols-2' : 'md:grid-cols-2 xl:grid-cols-4'}   gap-12 p-2`}>
+                {Object.values(visibleProducts).map((x: any, i: number) => <ProductPreview product={x} key={i}></ProductPreview>)}
             </div>
-            <Pagination pageInfo={pageInfo}></Pagination>
+            <Pagination page={currentPage} ></Pagination>
         </div >
 
     )
