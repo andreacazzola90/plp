@@ -51,7 +51,7 @@ export default async function Product({ params }: { params: { slug: string } }) 
             </div>
             {variants.map((v: any, i: number) =>
               <div key={i}>
-                <h3 className="text-black text-xl font-semibold">
+                <h3 className="text-black text-4xl font-semibold">
                   {v.price}€
                 </h3>
               </div>

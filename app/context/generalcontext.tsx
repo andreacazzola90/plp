@@ -6,7 +6,7 @@ const generalContextDefaultValues: generalContextType = {
     setCardSide: () => { },
     isAlphabeticSort: true,
     setAlphabeticSort: () => { },
-    cart: 0,
+    cart: [],
     addToCart: () => { },
     wishlist: 0,
     addToWishlist: () => { },
@@ -26,7 +26,7 @@ type Props = {
 export function GeneralProvider({ children }: Props) {
     const [isCardSide, setCardSide] = useState(false);
     const [isAlphabeticSort, setAlphabeticSort] = useState(true);
-    const [cart, addToCart] = useState(0);
+    const [cart, addToCart] = useState([]);
     const [wishlist, addToWishlist] = useState(0);
 
     return (

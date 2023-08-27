@@ -6,7 +6,6 @@ import Footer from './components/footer'
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import Breadcrumbs from './components/breadcrumbs/nextBreadCrumbs';
 //config.autoAddCss = false
 
 import ThemeProvider from './providers';

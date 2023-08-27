@@ -3,8 +3,8 @@ type generalContextType = {
     setCardSide: (view: boolean) => void
     isAlphabeticSort: boolean,
     setAlphabeticSort: (view: boolean) => void
-    cart: number
-    addToCart: (view: number) => void;
+    cart: Product[]
+    addToCart: (product:any) => void;
     wishlist: number
     addToWishlist: (view: number) => void;
 
