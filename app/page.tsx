@@ -1,15 +1,22 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import Navbar from './components/navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faGem, faHeart, faSeedling, faShirt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faGem,  faSeedling, faShirt,  } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Collections',
+  description: 'Collections listing',
+}
+
 async function getData() {
   const url = `${ process.env.DB_HOST }/collection_listings.json`
   const data = fetch(url).then(response => response.json())
 
   return data
 }
+
 export default async function Home() {
   const { collection_listings } = await getData()
 
@@ -23,7 +30,6 @@ export default async function Home() {
       <h1 className="text-5xl font-bold mb-12 mb:mb-20 mt-20 mb:mt-12">Le nostre collezioni</h1>
       <div className={`grid md:grid-cols-3 gap-12 p-2`}>
         {collection_listings.map((c: Collection, i: number) =>
-
           <>
             <Link href={`/collection/${c.collection_id}`} key={i} >
               <div className="flex items-center justify-center ">
@@ -47,7 +53,6 @@ export default async function Home() {
               </div>
             </Link>
           </>
-
         )}
       </div>
     </main >

@@ -1,7 +1,12 @@
 import PdpActions from '@/app/components/pdpActions';
 import PdpTabs from '@/app/components/pdp-tabs';
 import Image from 'next/image'
-import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'single product',
+  description: 'sigle product detail',
+}
 
 async function getData(slug: string) {
   const res = await fetch(`${process.env.DB_HOST}/products/${slug}.json`)
@@ -18,9 +23,6 @@ export default async function Product({ params }: { params: { slug: string } }) 
 
   return (
     <main className=" p-6 md:p-24 bg-base-100 text-base-content">
-
-      {/* <MySwiper></MySwiper> */}
-
       <div className=" flex flex-col w-full lg:flex-row">
         <div className="grid flex-shrink-0   mt-20 md:my-20 lg:pr-6">
           <Image
@@ -33,11 +35,15 @@ export default async function Product({ params }: { params: { slug: string } }) 
           />
         </div>
         <div className="divider lg:divider-horizontal" />
-        <div className="grid flex-shrink md:my-20">
+        <div className="grid flex-shrink md:my-20 w-full">
           <div className="flex flex-col space-y-5 lg:pl-4">
-            <h1 className="text-4xl text-black font-bold">
-              {product.title} {tags.map((t: any, i: number) => <div key={i} className="badge badge-secondary text-xs ml-2">{t}</div>)}
-            </h1>
+            <div className='flex justify-between items-center'>
+              <h1 className="text-4xl text-black font-bold">
+                {product.title}
+              </h1>
+              <div className='flex'>{tags.map((t: any, i: number) => <div key={i} className="badge badge-secondary text-xs mr-2">{t}</div>)}</div>
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: product.body_html! }} />
             <div className="text-md">
               <p className='mb-2'><span className='font-bold'>Vendor:</span> {product.vendor}</p>
               <p className='mb-2'><span className='font-bold'>Type:</span> {product.product_type}</p>
@@ -58,13 +64,9 @@ export default async function Product({ params }: { params: { slug: string } }) 
             )}
             <PdpActions product={product}></PdpActions>
           </div>
-
         </div>
-
       </div>
       <PdpTabs></PdpTabs>
-
-
     </main>
   )
 

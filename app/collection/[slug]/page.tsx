@@ -1,9 +1,12 @@
-import type { NextRequest } from 'next/server'
 import Plp from '../../components/plp';
 import { categories } from '@/app/utils';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Head from 'next/head';
+import { Metadata } from 'next';
 
-const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
+export const metadata: Metadata = {
+  title: 'single collection',
+  description: 'sigle collection detail',
+}
 
 async function getData(slug: string) {
   const url = `${process.env.DB_HOST}/collections/${slug}/products.json`
@@ -11,12 +14,10 @@ async function getData(slug: string) {
   return data
 }
 
-
 export default async function Page({ searchParams, params }: { searchParams: any, params: { slug: string } }) {
 
   const currentPage: number = searchParams?.currentPage || 0
   const collection: Collection = await getData(params.slug)
-
   const currentCollection = categories.find((c: any) => c.id == params.slug)
 
   return (
